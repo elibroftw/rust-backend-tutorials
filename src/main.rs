@@ -151,7 +151,7 @@ fn rocket() -> _ {
     let tauri_gh_cache = TauriGHReleaseCache{
         mutex: create_ttl_cache(RELEASE_TTL)
     };
-    let client = reqwest::Client::builder().user_agent("reqwest").build().unwrap();
+    let client = Client::builder().user_agent("reqwest").build().unwrap();
     rocket::build()
         .manage(client)
         .manage(tauri_gh_cache)

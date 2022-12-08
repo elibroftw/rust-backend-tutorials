@@ -1190,6 +1190,7 @@ dependencies = [
  "lru_time_cache",
  "reqwest",
  "rocket",
+ "serde",
 ]
 
 [[package]]
