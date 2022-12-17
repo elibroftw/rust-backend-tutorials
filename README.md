@@ -44,18 +44,42 @@ cargo 2>cargo.log
 - Mutex is for read and write exclusive access
 - RwLock is for write exclusive access if multiple reads is allowed
 
-Rust Backend Development Part 5 - Organizing Code Base
+[Rust Backend Development Part 5 - Serding Structs and Organizing the Codebase](https://youtu.be/F6r3GleRewU)
+
+- Json serialize, deserialize, and manipulate Structs
+- Splitting up features into different files
+- Exporting routes and base paths from files
+- Importing `utils.rs` in from files other than `main.rs`
+- Specifying a port using `Rocket.toml`
+
+    ```toml
+    [debug]
+    port = 2000
+    ```
 
 Rust Backend Development Part 6 - Rocket.rs Templates
 
 - Bundling templates to final product
 - CWD resistant
 
-Rust Backend Development Part 8 - MongoDB
+Rust Backend Development Part 7 - Integrating MongoDB
 
-Rust Backend Development Part 9 - Post/Forms
+- Setting up MongoDB with Rocket.rs
+- Verifying a login
+  - Setting a signed session cookie
+- Conditional template rendering based on login
+- Creating a REST API for blogging
+  - new
+  - edit
+  - delete
 
-Rust Backend Development Part 10 - CSRF Protection
+Rust Backend Development Part 8 - Rate limiting for security
+
+Rust Backend Development Part 9 - Hybrid Frontend with Templates and Webapp
+
+Rust Backend Development Part 10 - Post/Forms
+
+- CSRF Protection
 
 Rust Backend Development Part 11 - Background Functions
 
