@@ -57,29 +57,41 @@ cargo 2>cargo.log
     port = 2000
     ```
 
-Rust Backend Development Part 6 - Rocket.rs Templates
+Rust Backend Development Part 6 - Tera Templates & Forms
 
-- Bundling templates to final product
-- CWD resistant
+- [Template docs](https://rocket.rs/v0.5-rc/guide/responses/#templates)
+- [CSRF Protection](https://github.com/kotovalexarian/rocket_csrf)
+- Use Tera since syntax is jinja2 meaning portability with Python
+- `base.html.tera`
+- Login page extends the base
+- Sending static files with a ranked route to allow overrides
+- https://rocket.rs/v0.5-rc/guide/requests/#multiple-segments
 
-Rust Backend Development Part 7 - Integrating MongoDB
+- Consider using askama for future optimization
+- Where are templates in a production environment?
+
+Rust Backend Development Part 6 - Integrating MongoDB
 
 - Setting up MongoDB with Rocket.rs
-- Verifying a login
-  - Setting a signed session cookie
-- Conditional template rendering based on login
+- Creating a user API
+  - Verifying if a user logged in correctly
 - Creating a REST API for blogging
   - new
   - edit
   - delete
 
-Rust Backend Development Part 8 - Rate limiting for security
+Rust Backend Development Part 7 - Authentication & Rate Limiting
 
-Rust Backend Development Part 9 - Hybrid Frontend with Templates and Webapp
+- Verifying an admin user
+- Authenticated routes
+- Redirecting non-admins to the login page
+- Creating a new user with MongoDB
+- Rate limiting for security
 
-Rust Backend Development Part 10 - Post/Forms
+Rust Backend Development Part 10 - Hybrid Frontend with Templates and Webapp
 
-- CSRF Protection
+- Rendering the blog page
+- Conditional rendering an edit button
 
 Rust Backend Development Part 11 - Background Functions
 
