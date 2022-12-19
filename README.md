@@ -57,20 +57,18 @@ cargo 2>cargo.log
     port = 2000
     ```
 
-Rust Backend Development Part 6 - Tera Templates & Forms
+[Rust Backend Development Part 6 - Templates, Forms, Static Files](https://youtu.be/dkh94E17bdU)
 
-- [Template docs](https://rocket.rs/v0.5-rc/guide/responses/#templates)
-- [CSRF Protection](https://github.com/kotovalexarian/rocket_csrf)
-- Use Tera since syntax is jinja2 meaning portability with Python
-- `base.html.tera`
-- Login page extends the base
-- Sending static files with a ranked route to allow overrides
-- https://rocket.rs/v0.5-rc/guide/requests/#multiple-segments
+- [Templates](https://rocket.rs/v0.5-rc/guide/responses/#templates)
+  - Use Tera since syntax is jinja2 meaning portability with Python
+  - Creating a login page that extends a base template
+  - Optimize your templates in the future by using the askama engine
+- Processing form data with [CSRF Protection](https://github.com/kotovalexarian/rocket_csrf)
+  - Provide fail safe routes by using rank
 
-- Consider using askama for future optimization
-- Where are templates in a production environment?
+- [Serving static files](https://api.rocket.rs/v0.5-rc/rocket/fs/struct.FileServer.html) with path traversal protection
 
-Rust Backend Development Part 6 - Integrating MongoDB
+Rust Backend Development Part 7- Integrating MongoDB
 
 - Setting up MongoDB with Rocket.rs
 - Creating a user API
@@ -80,7 +78,7 @@ Rust Backend Development Part 6 - Integrating MongoDB
   - edit
   - delete
 
-Rust Backend Development Part 7 - Authentication & Rate Limiting
+Rust Backend Development Part 8 - Authentication & Rate Limiting
 
 - Verifying an admin user
 - Authenticated routes
@@ -101,3 +99,12 @@ Rust Backend Development Part 12 - Calling Python Script or Code from Within
 - Website or app will maintain feature set and Rust is used with a shorter waiting period
 - Rely on Rust cache and commands instead of Python's lru cache
 - Jinja2 parsing conversion
+
+Rust Backend Developer Part 13 - Production Deployment (DevOps)
+
+- Create a secret key using `openssl rand -base64 32` or with Python:
+
+    ```py
+    >>> import secrets
+    >>> secrets.token_urlsafe(32)
+    ```
