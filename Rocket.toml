@@ -1,3 +1,4 @@
 [debug]
 port = 2000
 secret_key = "vE/N4+NRLkqr1CW14YzibOp2BFXbSSYGtG4BeHsx/Ik="
+databases = { api_db = { url = "mongodb://localhost:27017" } }

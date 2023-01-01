@@ -12,6 +12,8 @@ use tauri_releases::TauriGHReleaseCache;
 mod utils;
 use utils::cache_new;
 mod users;
+mod databases;
+use databases::ApiDatabase;
 
 #[macro_use]
 extern crate rocket;
@@ -36,12 +38,15 @@ fn rocket() -> _ {
     let tauri_gh_cache = TauriGHReleaseCache{
         mutex: cache_new(tauri_releases::TTL)
     };
-    let client = Client::builder().user_agent("reqwest").build().expect("reqwest client could not be built");
+    let reqwestClient = Client::builder().user_agent("reqwest").build().expect("reqwest client could not be built");
+
     rocket::build()
-        .manage(client)
+        .manage(reqwestClient)
         .manage(tauri_gh_cache)
         .attach(rocket_csrf::Fairing::default())
         .attach(Template::fairing())
+        // attach databases
+        .attach(ApiDatabase.init())
         .mount("/static", FileServer::from(relative!("/static")))
         .mount("/", routes![index, favicon])
         .mount("/", users::routes())

@@ -68,9 +68,10 @@ cargo 2>cargo.log
 
 - [Serving static files](https://api.rocket.rs/v0.5-rc/rocket/fs/struct.FileServer.html) with path traversal protection
 
-Rust Backend Development Part 7- Integrating MongoDB
+Rust Backend Development Part 7 - Integrating MongoDB
 
-- Setting up MongoDB with Rocket.rs
+- Setting up [MongoDB](https://www.mongodb.com/docs/drivers/rust/) with Rocket
+- Hashing password with bcrypt
 - Creating a user API
   - Verifying if a user logged in correctly
 - Creating a REST API for blogging

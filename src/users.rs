@@ -4,8 +4,13 @@ use rocket::Route;
 use rocket_csrf::CsrfToken;
 use rocket::response::Redirect;
 
+#[path = "databases.rs"] mod databases;
+use databases::{Connection, ApiDatabase};
+
+// TODO: use emails as the username in the future
+
 pub fn routes() -> Vec<Route> {
-    routes![login, login_new, login_post, default_post_login]
+    routes![login, login_new, login_post, default_post_login, sign_up]
 }
 
 #[derive(FromForm)]
@@ -17,7 +22,7 @@ struct LoginData<'r> {
 }
 
 #[post("/login", data = "<form>")]
-fn login_post(csrf_token: CsrfToken, form: Form<LoginData>) -> Result<Redirect, Redirect> {
+fn login_post(mut db: Connection<APIDatabase>, csrf_token: CsrfToken, form: Form<LoginData>) -> Result<Redirect, Redirect> {
     if let Err(_) = csrf_token.verify(&form.authenticity_token) {
         return Err(Redirect::to(uri!(login(form.next_page))));
     }
@@ -45,4 +50,22 @@ fn login(csrf_token: CsrfToken, next: Option<&str>) -> Template {
 #[get("/login?<next>", rank = 2)]
 fn login_new(next: Option<&str>) -> Redirect {
     Redirect::to(uri!(login(next)))
+}
+
+
+#[derive(FromForm)]
+struct SignUpData<'r> {
+    authenticity_token: String,
+    next_page: Option<&'r str>,
+    username: &'r str,
+    password: &'r str,
+}
+
+
+#[get("/sign-up?<next>", rank = 1)]
+fn sign_up(mut db: Connection<APIDatabase>, csrf_token: CsrfToken, next: Option<&str>) -> Template {
+    Template::render("sign-up", context! {
+        authenticity_token: csrf_token.authenticity_token(),
+        next_page: next
+    })
 }
