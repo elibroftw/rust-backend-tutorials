@@ -3,13 +3,24 @@
 {# a safe sign-up would require email confirmation! #}
 <form action="/sign-up/" method="post">
     <input name="authenticity_token" hidden value="{{ authenticity_token }}" />
-    <input name="username" placeholder="username" type="text" />
-    <input name="password" placeholder="password" type="password" />
+
+    {%- if email_confirmation_step %}
+    <input name="email_code" placeholder="XXXXXX" type="text" />
+    {%- endif %}
+
+    <input name="username" {{email_confirmation_step and 'hidden' or '' | safe}} placeholder="username" type="text" />
+    <input name="password" {{email_confirmation_step and 'hidden' or '' | safe}} placeholder="password" type="password" />
+
     {#- the minus character is used to remove the newline #}
     {%- if next_page %}
     <input name="next_page" hidden value="{{ next_page }}" />
     {#- this minus character removes the newline of this block if it is rendered #}
     {%- endif %}
+
     <button type="submit">Submit</button>
+
+    {%- if error %}
+    <p class="errorText">ERROR: {{ error }}</p>
+    {%- endif %}
 </form>
 {% endblock content %}

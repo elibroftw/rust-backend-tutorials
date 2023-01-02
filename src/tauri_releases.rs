@@ -4,8 +4,8 @@ use rocket::serde::json::{json, Value};
 use rocket::{Route, State};
 use reqwest;
 use reqwest::Client;
-#[path = "utils.rs"] mod utils;
-use utils::{StringValueCache, cache_get, cache_insert, remove_suffix, text_request};
+use crate::utils::{StringValueCache, cache_get, cache_insert, remove_suffix, text_request};
+
 
 // TTL: time to live
 pub const TTL: u64 = 5 * 60;

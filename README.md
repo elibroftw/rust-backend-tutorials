@@ -74,6 +74,7 @@ Rust Backend Development Part 7 - Integrating MongoDB
 - Hashing password with bcrypt
 - Creating a user API
   - Verifying if a user logged in correctly
+  - bcrypt
 - Creating a REST API for blogging
   - new
   - edit
@@ -85,7 +86,7 @@ Rust Backend Development Part 8 - Authentication & Rate Limiting
 - Authenticated routes
 - Redirecting non-admins to the login page
 - Creating a new user with MongoDB
-- Rate limiting for security
+- [Rate limiting](https://crates.io/crates/rocket-governor) for security
 
 Rust Backend Development Part 10 - Hybrid Frontend with Templates and Webapp
 
