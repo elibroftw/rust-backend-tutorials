@@ -45,9 +45,20 @@ pub struct User {
 }
 
 impl User {
-    pub fn new(username: &str, password: &str) -> User {
-        // TODO: set admin to false after first user
-        User { username: username.to_string(), password: password.to_string(), admin: true }
+    pub fn new<S: Into<String>>(username: S, password: S) -> User {
+        User { username: username.into(), password: password.into(), admin: false }
+    }
+
+    pub fn username(&self) -> &str {
+        &self.username
+    }
+
+    pub fn password_hash(&self) -> &str {
+        &self.password
+    }
+
+    pub fn admin(&self) -> bool {
+        self.admin
     }
 }
 
