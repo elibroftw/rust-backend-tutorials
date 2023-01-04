@@ -2,8 +2,8 @@
 {% block content %}
 <form action="/login/" method="post">
     <input name="authenticity_token" hidden value="{{ authenticity_token }}" />
-    <input name="username" placeholder="username" type="text" />
-    <input name="password" placeholder="password" type="password" />
+    <input name="username" placeholder="username" type="text" required />
+    <input name="password" placeholder="password" type="password" required />
     {#- the minus character is used to remove the newline #}
     {%- if next_page %}
     <input name="next_page" hidden value="{{ next_page }}" />

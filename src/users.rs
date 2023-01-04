@@ -1,6 +1,5 @@
-use std::error::Error;
-
-use crate::databases::{Connection, MainDatabase, doc, User, DatabaseUtils};
+use crate::databases::{Connection, MainDatabase, User, DatabaseUtils};
+use bson::doc;
 use argon2::{
     password_hash::{
         self, rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier, SaltString
@@ -20,13 +19,13 @@ struct LoginData<'r> {
     password: &'r str,
 }
 
-struct UserGuard {
+struct _UserGuard {
     username: String,
     admin: bool
 }
 
 #[rocket::async_trait]
-impl<'r> FromRequest<'r> for UserGuard {
+impl<'r> FromRequest<'r> for _UserGuard {
     type Error = bool;
 
     async fn from_request(request: &'r rocket::Request<'_>) ->  Outcome<Self, Self::Error> {
@@ -37,7 +36,7 @@ impl<'r> FromRequest<'r> for UserGuard {
             _ => false
         });
         if let (Some(username), Some(admin)) = (username, admin) {
-            return Outcome::Success(UserGuard{username, admin});
+            return Outcome::Success(_UserGuard{username, admin});
         }
         Outcome::Failure((Status::Unauthorized, false))
     }
@@ -92,7 +91,7 @@ struct SignUpData<'b> {
     next_page: Option<&'b str>,
     username: &'b str,
     password: &'b str,
-    email_code: Option<&'b str>,
+    _email_code: Option<&'b str>, // TODO
 }
 
 

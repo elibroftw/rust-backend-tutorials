@@ -1,10 +1,12 @@
-use rocket::response::Redirect;
+use rocket::{
+    response::Redirect,
+    fs::{NamedFile, FileServer, relative},
+    fairing::AdHoc
+};
 use reqwest;
 use reqwest::Client;
 use rocket_dyn_templates::Template;
-use rocket::fs::{FileServer, relative};
 use std::path::Path;
-use rocket::fs::NamedFile;
 // local imports
 mod serde_examples;
 mod tauri_releases;
@@ -15,7 +17,7 @@ mod users;
 mod databases;
 use databases::{MainDatabase, create_indexes};
 use rocket_db_pools::Database;
-use rocket::fairing::AdHoc;
+mod blog;
 
 #[macro_use]
 extern crate rocket;
@@ -55,4 +57,5 @@ fn rocket() -> _ {
         .mount("/", users::routes())
         .mount(tauri_releases::BASE, tauri_releases::routes())
         .mount(serde_examples::BASE, serde_examples::routes())
+        .mount(blog::BASE, blog::routes())
 }

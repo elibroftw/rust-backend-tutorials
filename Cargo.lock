@@ -207,6 +207,7 @@ checksum = "99d76085681585d39016f4d3841eb019201fc54d2dd0d92ad1e4fab3bfb32754"
 dependencies = [
  "ahash",
  "base64",
+ "chrono",
  "hex",
  "indexmap",
  "lazy_static",
@@ -2164,6 +2165,8 @@ name = "sample-project"
 version = "0.1.0"
 dependencies = [
  "argon2",
+ "bson",
+ "chrono",
  "lru_time_cache",
  "reqwest",
  "rocket",

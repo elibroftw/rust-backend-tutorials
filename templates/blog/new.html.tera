@@ -1,0 +1,10 @@
+{% extends "base" %}
+{% block content %}
+<h1>new blog post</h1>
+<form action="/blog/posts/new" method="post" id="create-post-form">
+    <input name="authenticity_token" hidden value="{{ authenticity_token }}" />
+    <input name="title" placeholder="title" type="text" required />
+    <button type="submit">Submit</button>
+</form>
+<textarea rows="4" name="content" placeholder="content" form="create-post-form" required />
+{% endblock content %}

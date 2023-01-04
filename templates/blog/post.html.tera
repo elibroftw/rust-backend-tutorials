@@ -1,0 +1,10 @@
+{% extends "base" %}
+{% block content %}
+<h1>{{post.title}}</h1>
+<span>published: {{post.published['$date']['$numberLong']}}</span>
+
+<br>
+<p>
+    {{post.content}}
+</p>
+{% endblock content %}

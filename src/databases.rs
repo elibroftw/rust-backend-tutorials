@@ -1,23 +1,22 @@
-pub use mongodb::bson::doc;
-use mongodb::{options::ClientOptions, options::IndexOptions, IndexModel};
 use rocket::fairing;
 use rocket::{Build, Rocket};
 pub use rocket_db_pools::Connection;
 use rocket_db_pools::{mongodb, Database};
+use bson::{doc, oid::ObjectId};
+use mongodb::{options::IndexOptions, IndexModel};
 use serde::{Deserialize, Serialize};
 
-// see https://api.rocket.rs/v0.5-rc/rocket_db_pools/ for all database alternatives
-// see https://api.rocket.rs/v0.5-rc/rocket_db_pools/ for all database alternatives
-
-// https://rocket.rs/v0.5-rc/guide/state/#databases
-
-// mongodb::Client
+pub const MAIN_DATABASE_NAME: &'static str = "app_name";
 
 #[derive(Database)]
 #[database("api_db")]
 pub struct MainDatabase(mongodb::Client);
-// usage ; ([mut] db: Connection<MainDatabase>, ...)
+// usage : ([mut] db: Connection<MainDatabase>, ...)
 
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct Id{
+    pub _id: ObjectId
+}
 
 pub trait DatabaseUtils {
     fn app_db(&self) -> mongodb::Database;
@@ -27,12 +26,10 @@ pub trait DatabaseUtils {
 
 impl DatabaseUtils for mongodb::Client {
     fn app_db(&self) -> mongodb::Database {
-        // usage with Connection: &*db
-        self.database("app_name")
+        self.database(MAIN_DATABASE_NAME)
     }
 
     fn users_coll(&self) -> mongodb::Collection<User> {
-        // usage with Connection: &*db
         self.app_db().collection::<User>("users")
     }
 }
@@ -43,6 +40,7 @@ pub struct User {
     password: String,
     admin: bool,
 }
+
 
 impl User {
     pub fn new<S: Into<String>>(username: S, password: S) -> User {

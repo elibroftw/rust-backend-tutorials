@@ -8,8 +8,8 @@
     <input name="email_code" placeholder="XXXXXX" type="text" />
     {%- endif %}
 
-    <input name="username" {{email_confirmation_step and 'hidden' or '' | safe}} placeholder="username" type="text" />
-    <input name="password" {{email_confirmation_step and 'hidden' or '' | safe}} placeholder="password" type="password" />
+    <input name="username" {{email_confirmation_step and 'hidden' or '' | safe}} placeholder="username" type="text" required />
+    <input name="password" {{email_confirmation_step and 'hidden' or '' | safe}} placeholder="password" type="password" required />
 
     {#- the minus character is used to remove the newline #}
     {%- if next_page %}
