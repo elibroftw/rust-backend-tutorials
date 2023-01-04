@@ -5,7 +5,7 @@ use rocket::{form::Form, Route, http::{uri::Origin, Status}, response::Redirect,
 use rocket_db_pools::mongodb::{options::FindOptions, TopologyType::Unknown};
 use crate::databases::{Id, Connection, MainDatabase, DatabaseUtils};
 use rocket_dyn_templates::{Template, context};
-use bson::{self, doc, Document, DateTime, oid::ObjectId};
+use bson::{self, doc, Document, DateTime, oid::ObjectId, serde_helpers::bson_datetime_as_rfc3339_string};
 
 pub const BASE: Origin<'static> = uri!("/blog");
 
@@ -18,9 +18,10 @@ struct PostData<'r> {
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 struct BlogPost {
-    _id: Option<String>,
+    _id: ObjectId,
     title: String,
     content: String,
+    #[serde(with = "bson_datetime_as_rfc3339_string")]
     published: DateTime
 }
 
@@ -31,10 +32,10 @@ fn index(page: Option<u64>) -> Redirect {
 
 #[get("/posts?<page>")]
 async fn blog_posts(db: Connection<MainDatabase>, page: Option<u64>) -> Template {
-    let posts_coll = db.app_db().collection::<Document>("posts");
+    let posts_coll = db.app_db().collection::<BlogPost>("posts");
     let find_options = FindOptions::builder().limit(50).skip((page.unwrap_or(1) - 1) * 50).build();
     let cursor = posts_coll.find(None, find_options).await.unwrap();
-    let posts: Vec<Document> = cursor.try_collect().await.unwrap();
+    let posts: Vec<BlogPost> = cursor.try_collect().await.unwrap();
     // can probably do html generation on Rust side to avoid another iteration
     Template::render("blog/index", context! {posts})
 }
@@ -42,9 +43,8 @@ async fn blog_posts(db: Connection<MainDatabase>, page: Option<u64>) -> Template
 // TODO: implement
 #[get("/posts/<id>")]
 async fn blog_post(id: String, db: Connection<MainDatabase>) -> Result<Template, Status> {
-    let posts_coll = db.app_db().collection::<Document>("posts");
+    let posts_coll = db.app_db().collection::<BlogPost>("posts");
     let oid = ObjectId::parse_str(&id).map_err(|_e| Status::InternalServerError)?;
-    // match posts_coll.find_one(doc!{"title": "First Post!!!"}, None).await.unwrap() {
     match posts_coll.find_one(doc!{"id": &id}, None).await.unwrap() {
         Some(post) => Ok(Template::render("blog/post", context! {post})),
         _ => Err(Status::NotFound)
@@ -71,7 +71,7 @@ async fn new_blog_post_api(form: Form<PostData<'_>>, csrf_token: CsrfToken, db: 
     let posts = db.database("app_name").collection("posts");
     let _insert_result = posts.insert_one(
         bson::to_document(
-            &BlogPost{_id: None, title: form.title.into(), content: form.content.into(), published: Utc::now().into()}
+            &BlogPost{_id: ObjectId::new(), title: form.title.into(), content: form.content.into(), published: Utc::now().into()}
         ).unwrap(), None).await.map_err(|_e| Status::InternalServerError)?;
     // TODO: flash a success
     Ok(Redirect::to(uri!(BASE, blog_posts(Some(1)))))
