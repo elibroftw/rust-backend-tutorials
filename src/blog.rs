@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use chrono::Utc;
+use chrono::{Utc, NaiveDateTime};
 use rocket_csrf::CsrfToken;
 use rocket::{form::Form, Route, http::{uri::Origin, Status}, response::Redirect, futures::{TryStreamExt, StreamExt}, serde::json::to_pretty_string};
 use rocket_db_pools::mongodb::{options::FindOptions, TopologyType::Unknown};
@@ -40,12 +40,16 @@ async fn blog_posts(db: Connection<MainDatabase>, page: Option<u64>) -> Template
     Template::render("blog/index", context! {posts})
 }
 
+fn format_date(milis: i64) -> NaiveDateTime {
+    NaiveDateTime::from_timestamp_millis(milis).unwrap()
+}
+
 // TODO: implement
 #[get("/posts/<id>")]
-async fn blog_post(id: String, db: Connection<MainDatabase>) -> Result<Template, Status> {
+async fn blog_post(id: &str, db: Connection<MainDatabase>) -> Result<Template, Status> {
     let posts_coll = db.app_db().collection::<BlogPost>("posts");
     let oid = ObjectId::parse_str(&id).map_err(|_e| Status::InternalServerError)?;
-    match posts_coll.find_one(doc!{"id": &id}, None).await.unwrap() {
+    match posts_coll.find_one(doc!{"_id": oid}, None).await.unwrap() {
         Some(post) => Ok(Template::render("blog/post", context! {post})),
         _ => Err(Status::NotFound)
     }
