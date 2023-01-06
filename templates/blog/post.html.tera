@@ -1,7 +1,7 @@
 {% extends "base" %}
 {% block content %}
 <h1>{{post.title}}</h1>
-<span>published: {{post.published}}</span>
+<span>published: {{post.published_str}}</span>
 
 <br>
 <p>

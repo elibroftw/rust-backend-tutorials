@@ -13,7 +13,7 @@ serde = "1.0"
 rocket_dyn_templates = { version = "0.1.0-rc.2", features = ["tera"]}
 rocket_csrf = { git = "https://github.com/kotovalexarian/rocket_csrf", branch = "master" }
 bson = {version = "2.4", features=["chrono-0_4"]}
-chrono = "0.4"
+chrono = {version = "0.4", features=["std"]}
 rocket_db_pools = { version = "0.1.0-rc.2", features = ["mongodb"]}
 # https://rocket.rs/v0.5-rc/guide/state/#databases
 # see https://api.rocket.rs/v0.5-rc/rocket_db_pools/ for all async databases

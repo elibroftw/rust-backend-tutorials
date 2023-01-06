@@ -71,17 +71,19 @@ cargo 2>cargo.log
 Rust Backend Development Part 7 - Integrating MongoDB
 
 - Setting up [MongoDB](https://www.mongodb.com/docs/drivers/rust/) with Rocket
-- Hashing password with bcrypt
-- Creating a user API
-  - Verifying if a user logged in correctly
-  - bcrypt
 - Creating a REST API for blogging
   - new
   - edit
   - delete
+  - posts
+  - posts/id
 
 Rust Backend Development Part 8 - Authentication & Rate Limiting
 
+- Hashing password with bcrypt
+- Creating a user API
+  - Verifying if a user logged in correctly
+  - bcrypt
 - Verifying an admin user
 - Authenticated routes
 - Redirecting non-admins to the login page
