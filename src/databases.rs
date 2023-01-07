@@ -13,11 +13,6 @@ pub const MAIN_DATABASE_NAME: &'static str = "app_name";
 pub struct MainDatabase(mongodb::Client);
 // usage : ([mut] db: Connection<MainDatabase>, ...)
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct Id{
-    pub _id: ObjectId
-}
-
 pub trait DatabaseUtils {
     fn app_db(&self) -> mongodb::Database;
 
@@ -40,7 +35,6 @@ pub struct User {
     password: String,
     admin: bool,
 }
-
 
 impl User {
     pub fn new<S: Into<String>>(username: S, password: S) -> User {

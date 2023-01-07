@@ -71,7 +71,7 @@ fn authenticated_sample_route() -> String {
     "worked!".to_string()
 }
 
-#[get("/login?<next>")]
+#[get("/login?<next>", rank=1)]
 fn login(csrf_token: CsrfToken, next: Option<&str>) -> Template {
     Template::render("login", context! {
         authenticity_token: csrf_token.authenticity_token(),
@@ -79,7 +79,7 @@ fn login(csrf_token: CsrfToken, next: Option<&str>) -> Template {
     })
 }
 
-#[get("/login?<next>", rank=1)]
+#[get("/login?<next>", rank=2)]
 fn login_new(next: Option<&str>) -> Redirect {
     Redirect::to(uri!(login(next)))
 }

@@ -1,7 +1,7 @@
 {% extends "base" %}
 {% block content %}
-<h1>blog home</h1>
-<a href="/blog/posts/new">new post</a>
+<h1>Blog Posts</h1>
+<a href="/blog/new-post">New post</a>
 {%- for post in posts %}
     <h2><a href="/blog/posts/{{post._id['$oid']}}">{{ post.title }}</a></h2>
 {%- endfor %}

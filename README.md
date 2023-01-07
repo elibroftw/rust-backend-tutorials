@@ -9,6 +9,11 @@ A helpful command to debug faster
 cargo 2>cargo.log
 ```
 
+```sh
+cargo install cargo-watch
+cargo watch -x run
+```
+
 ## Tutorials Outline
 
 [Rust Backend Development Part 1 - Creating an API Endpoint in Rocket](https://youtu.be/2vxvSMkm5Lg)
