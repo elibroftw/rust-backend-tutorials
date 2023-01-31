@@ -14,6 +14,9 @@ pub const BASE: Origin<'static> = uri!("/tauri-releases");
 
 const GOOGLE_KEEP_DESKTOP_REPO: &str = "elibroftw/google-keep-desktop-app";
 
+// todo: we want a map of urls -> releases
+//  as well as a map of urls -> mutexes
+// this will ensure that a request for one repo won't block the other
 pub struct TauriGHReleaseCache{ pub mutex: StringValueCache }
 
 pub fn routes() -> Vec<Route> {
