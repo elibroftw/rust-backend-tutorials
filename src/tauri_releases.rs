@@ -4,7 +4,7 @@ use rocket::serde::json::{json, Value};
 use rocket::{Route, State};
 use reqwest;
 use reqwest::Client;
-use crate::utils::{StringValueCache, cache_get, cache_insert, remove_suffix, text_request};
+use crate::utils::{StringValueCache, remove_suffix, text_request};
 
 
 // TTL: time to live
@@ -73,9 +73,9 @@ async fn get_latest_release(client: &State<Client>, repo: &str) -> Result<Value,
 }
 
 async fn get_latest_release_ttl(cache: &State<TauriGHReleaseCache>, client: &State<Client>, repo: &str) -> Value {
-
-    if let Some(release) = cache_get(&cache.mutex, repo) {
-        return release.clone()
+    let mut guard = cache.mutex.lock().await;
+    if let Some(release) = guard.get(repo) {
+        return release.clone();
     }
 
     let release = get_latest_release(client, repo).await.or_else(|error| {
@@ -84,7 +84,7 @@ async fn get_latest_release_ttl(cache: &State<TauriGHReleaseCache>, client: &Sta
         // avoid rate limiting by using empty JSON on a request error
         Ok::<Value, reqwest::Error>(json!({}))
     }).unwrap();
-    cache_insert(&cache.mutex, repo, &release);
+    guard.insert(repo.to_string(), release.clone());
     release
 }
 

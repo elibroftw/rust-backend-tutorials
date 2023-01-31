@@ -1,9 +1,10 @@
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 use std::time::Duration;
 use lru_time_cache::LruCache;
 use rocket::serde::json::{Value};
 use reqwest::Client;
 use rocket::State;
+use tokio::sync::Mutex;
 
 pub type StringValueCache = Arc<Mutex<LruCache<String, Value>>>;
 // RwLock vs. Mutex
@@ -13,14 +14,6 @@ pub type StringValueCache = Arc<Mutex<LruCache<String, Value>>>;
 
 pub fn cache_new(ttl: u64) -> StringValueCache {
     Arc::new(Mutex::new(LruCache::with_expiry_duration(Duration::from_secs(ttl))))
-}
-
-pub fn cache_get(mutex: &StringValueCache, key: &str) -> Option<Value> {
-    mutex.lock().unwrap().get(key).map(|x|  x.clone())
-}
-
-pub fn cache_insert(mutex: &StringValueCache, key: &str, value: &Value) {
-    mutex.lock().unwrap().insert(key.to_string(), value.clone());
 }
 
 pub fn remove_suffix<'a>(s: &'a str, suffix: &str) -> &'a str {

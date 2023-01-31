@@ -15,6 +15,7 @@ rocket_csrf = { git = "https://github.com/kotovalexarian/rocket_csrf", branch = 
 bson = {version = "2.4", features=["chrono-0_4"]}
 chrono = {version = "0.4", features=["std"]}
 rocket_db_pools = { version = "0.1.0-rc.2", features = ["mongodb"]}
+tokio = { version = "1.25.0", features = ["sync"] }
 # https://rocket.rs/v0.5-rc/guide/state/#databases
 # see https://api.rocket.rs/v0.5-rc/rocket_db_pools/ for all async databases
 # see https://api.rocket.rs/v0.5-rc/rocket_sync_db_pools/ for all sync databases
