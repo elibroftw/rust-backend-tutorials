@@ -1,0 +1,23 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cargo watch -x run",
+            "type": "shell",
+            "command": "cargo watch -x run",
+            "runOptions": {"instanceLimit": 1},
+            "group": {
+                "isDefault": true,
+                "kind": "build"
+            }
+        },
+        {
+            "label": "cargo install cargo-watch",
+            "type": "shell",
+            "command": "cargo install cargo-watch",
+            "isBackground": true
+        }
+    ]
+}

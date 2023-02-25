@@ -1,8 +1,9 @@
+// TODO
 use crate::databases::{Connection, MainDatabase, User, DatabaseUtils};
 use bson::doc;
 use argon2::{
     password_hash::{
-        self, rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier, SaltString
+        rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier, SaltString
     },
     Argon2
 };

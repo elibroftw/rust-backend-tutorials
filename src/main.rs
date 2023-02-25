@@ -10,10 +10,9 @@ use std::path::Path;
 // local imports
 mod serde_examples;
 mod tauri_releases;
-use tauri_releases::TauriGHReleaseCache;
-mod utils;
-use utils::cache_new;
+use tauri_releases::{new_tauri_gh_release, GoogleKeepDesktopRelease};
 mod users;
+mod utils; // used by other files
 mod databases;
 use databases::{MainDatabase, create_indexes};
 use rocket_db_pools::Database;
@@ -39,14 +38,12 @@ async fn favicon() -> Option<NamedFile> {
 
 #[launch]
 fn rocket() -> _ {
-    let tauri_gh_cache = TauriGHReleaseCache{
-        mutex: cache_new(tauri_releases::TTL)
-    };
+    let google_keep_release: GoogleKeepDesktopRelease = new_tauri_gh_release();
     let reqwest_client = Client::builder().user_agent("reqwest").build().expect("reqwest client could not be built");
 
     rocket::build()
         .manage(reqwest_client)
-        .manage(tauri_gh_cache)
+        .manage(google_keep_release)
         .attach(rocket_csrf::Fairing::default())
         .attach(Template::fairing())
         // attach databases

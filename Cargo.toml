@@ -8,7 +8,6 @@ edition = "2021"
 [dependencies]
 rocket = { version = "0.5.0-rc.2", features = ["json", "secrets"] }
 reqwest = { version = "0.11.13", features = ["json"] }
-lru_time_cache = "0.11.11"
 serde = "1.0"
 rocket_dyn_templates = { version = "0.1.0-rc.2", features = ["tera"]}
 rocket_csrf = { git = "https://github.com/kotovalexarian/rocket_csrf", branch = "master" }

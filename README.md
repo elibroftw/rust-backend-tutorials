@@ -44,7 +44,9 @@ cargo watch -x run
 
 [Rust Backend Development Part 4  - Caching Function Results in Rocket Server](https://youtu.be/NYYE6FgkXGI)
 
-- Using LRU Cache with a time to live (TTL)
+- ~~Using LRU Cache with a time to live (TTL)~~
+- Lecture on concurrency in Rust
+- Using RwLock to cache endpoint results
 - Arc is for multi threaded memory safety
 - Mutex is for read and write exclusive access
 - RwLock is for write exclusive access if multiple reads is allowed
