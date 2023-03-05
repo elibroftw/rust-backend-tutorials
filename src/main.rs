@@ -40,7 +40,6 @@ async fn favicon() -> Option<NamedFile> {
 fn rocket() -> _ {
     let google_keep_release: GoogleKeepDesktopRelease = new_tauri_gh_release();
     let reqwest_client = Client::builder().user_agent("reqwest").build().expect("reqwest client could not be built");
-
     rocket::build()
         .manage(reqwest_client)
         .manage(google_keep_release)

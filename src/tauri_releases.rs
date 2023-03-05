@@ -15,9 +15,9 @@ pub const TTL: u64 = 5 * 60;
 pub const BASE: Origin<'static> = uri!("/tauri-releases");
 
 #[derive(Debug)]
-pub struct TauriGHRelease {
-    pub value: Value,
-    pub expiry: SystemTime
+pub struct TauriGHRelease { // struct name is whatever the function encompasses
+    pub value: Value,       // value is what we want to cache (the functions result for a particular argument)
+    pub expiry: SystemTime  // time value is valid until
 }
 
 pub fn new_tauri_gh_release() -> RwLock<TauriGHRelease> {
@@ -100,13 +100,14 @@ async fn get_latest_release(client: &State<Client>, repo: &str) -> Result<Value,
     create_tauri_response(client, &github_release).await.ok_or(json!({})).or_else(|e| Ok(e))
 }
 
-async fn get_latest_release_ttl(latest_release: &State<GoogleKeepDesktopRelease>, client: &State<Client>, repo: &str) -> Value {
+async fn get_latest_release_ttl(latest_release: &State<RwLock<TauriGHRelease>>, client: &State<Client>, repo: &str) -> Value {
     // use a block so that guard automatically drops
     let guard = latest_release.read().await;
     if guard.expiry > SystemTime::now() { return guard.value.clone(); }
     drop(guard);
     // tauri updater response is expired, so try to fix the cache
     let mut guard = latest_release.write().await;
+    if guard.expiry > SystemTime::now() { return guard.value.clone(); }
 
     let release = get_latest_release(client, repo).await.or_else(|error| {
         // TODO: notify someone via Element/Discord/Slack (use webhooks or bots)

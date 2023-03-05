@@ -44,12 +44,14 @@ cargo watch -x run
 
 [Rust Backend Development Part 4  - Caching Function Results in Rocket Server](https://youtu.be/NYYE6FgkXGI)
 
-- ~~Using LRU Cache with a time to live (TTL)~~
 - Lecture on concurrency in Rust
 - Using RwLock to cache endpoint results
 - Arc is for multi threaded memory safety
 - Mutex is for read and write exclusive access
 - RwLock is for write exclusive access if multiple reads is allowed
+- If you don't want to create a new type for each response, you can use an LRU Cache with a time to live (TTL) for functions but this is not as performative
+- For me: look into [ignite fairing](https://api.rocket.rs/v0.5-rc/rocket/struct.Rocket.html#method.ignite) to update cached respones
+in the background.
 
 [Rust Backend Development Part 5 - Serding Structs and Organizing the Codebase](https://youtu.be/F6r3GleRewU)
 
