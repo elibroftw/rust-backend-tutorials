@@ -14,6 +14,18 @@ cargo install cargo-watch
 cargo watch -x run
 ```
 
+## Troubleshooting
+
+```log
+process didn't exit successfully: C:\Users\maste\Documents\GitHub\rust-backend-tutorials\target\debug\build\ring-a1678af766c289b9\build-script-build (exit code: 101)
+```
+
+To fix this, make sure you have Visual Studio installed, and run this command. You may also need to install the MSVC version of rust.
+
+```cmd
+rustup override set stable-msvc
+```
+
 ## Tutorials Outline
 
 [Rust Backend Development Part 1 - Creating an API Endpoint in Rocket](https://youtu.be/2vxvSMkm5Lg)
