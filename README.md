@@ -1,6 +1,8 @@
-# Rust Backend Tutorials Using Rocket
+# Rust Backend Tutorials Using Actix
 
-My goal is to be able to covert some of my website's flask backend into a rocket.rs backend without changing my templates by too much.
+Previously, this tutorial was off of Rocket.rs, however issues such as CSRF have hindered the tutorials and improvements in Actix usability has convinced me to start using Actix.
+
+My goal is to be able to covert some of my website's flask backend into a Actix backend without changing my templates by too much.
 Doing so will make me a more proficient Rust programmer and I'll also be able to churn out a couple videos doign so.
 
 A helpful command to debug faster
@@ -26,7 +28,9 @@ To fix this, make sure you have Visual Studio installed, and run this command. Y
 rustup override set stable-msvc
 ```
 
-## Tutorials Outline
+## Tutorials Actix
+
+## Tutorials Rocket.rs
 
 [Rust Backend Development Part 1 - Creating an API Endpoint in Rocket](https://youtu.be/2vxvSMkm5Lg)
 
